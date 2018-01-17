@@ -1,0 +1,81 @@
+apply plugin: 'com.android.library'
+apply from: 'https://raw.githubusercontent.com/intowow/ce-sdk-android-config/master/aar-config.gradle'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions{
+        abortOnError false
+        disable "ResourceType"
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.google.android.gms:play-services-ads:11.8.0'
+    compile ('com.android.support:appcompat-v7:26.1.0')
+    testCompile 'junit:junit:4.12'
+}
+
+task deleteOldJar(type: Delete) {
+    delete 'release/CEMediationRewardedVideo.jar'
+}
+
+task exportJar(type: Copy) {
+    from('build/intermediates/bundles/default/')
+    into('release/')
+    include('classes.jar')
+    rename('classes.jar', 'CEMediationRewardedVideo.jar')
+}
+
+exportJar.dependsOn(deleteOldJar, build)
+
+def frameworkDeps = "${rootProject.getRootDir().getAbsolutePath()}/app/libs"
+task aarConfigApp() {
+    def configAarSuccess = configAar(frameworkDeps)
+    if (!configAarSuccess) {
+        frameworkDeps = "${project.projectDir.path}" + "/libs"
+        configAar(frameworkDeps)
+    }
+}
+
+def configAar(String libPath) {
+    def hasAar = false
+    new File(libPath).listFiles().each { File file ->
+        def fileName = file.name
+        if (fileName.endsWith('.aar')) {
+            def aarName = fileName.substring(0, fileName.length() - 4)
+            hasAar = true
+            dependencies {
+                compile(name: aarName, ext: 'aar')
+            }
+        }
+    }
+
+    if (hasAar) {
+        repositories {
+            flatDir {
+                dirs libPath
+            }
+        }
+    }
+
+    return hasAar
+}
