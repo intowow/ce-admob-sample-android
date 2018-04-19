@@ -3,10 +3,10 @@ apply from: 'https://raw.githubusercontent.com/intowow/ce-sdk-android-config/mas
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.intowow.admobdemo"
-        minSdkVersion 19
+        minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
