@@ -13,6 +13,7 @@ import com.google.android.gms.ads.mediation.customevent.CustomEventInterstitialL
 import com.intowow.sdk.Ad;
 import com.intowow.sdk.AdError;
 import com.intowow.sdk.InterstitialAd;
+import com.intowow.sdk.RequestInfo;
 
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INTERNAL_ERROR;
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_NETWORK_ERROR;
@@ -25,7 +26,7 @@ import static com.google.android.gms.ads.AdRequest.ERROR_CODE_NO_FILL;
 public class CECustomEventInterstitial implements CustomEventInterstitial, InterstitialAd.InterstitialAdListener {
 
     private static final String TAG = CECustomEventInterstitial.class.getSimpleName();
-    private static final int DEFAULT_TIMEOUT_MILLIS = 10000;
+    private static final int DEFAULT_TIMEOUT_MILLIS = 5000;
 
     private CustomEventInterstitialListener mInterstitialListener = null;
 
@@ -70,13 +71,16 @@ public class CECustomEventInterstitial implements CustomEventInterstitial, Inter
 
         mInterstitialListener = customEventInterstitialListener;
 
-        mInterstitialAd = new InterstitialAd(context, placementId);
+        mInterstitialAd = new InterstitialAd(context);
 
         //	you can close the interstitial ad while user engaging the ad
         //
         mInterstitialAd.setAutoCloseWhenEngaged(mAutoCloseWhenEngaged);
         mInterstitialAd.setAdListener(this);
-        mInterstitialAd.loadAd(DEFAULT_TIMEOUT_MILLIS);
+        RequestInfo requestInfo = new RequestInfo();
+        requestInfo.setPlacement(placementId);
+        requestInfo.setTimeout(DEFAULT_TIMEOUT_MILLIS);
+        mInterstitialAd.loadAd(requestInfo);
     }
 
     @Override

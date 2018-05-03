@@ -29,6 +29,7 @@ import com.intowow.sdk.Ad;
 import com.intowow.sdk.AdError;
 import com.intowow.sdk.AdListener;
 import com.intowow.sdk.NativeAd;
+import com.intowow.sdk.RequestInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,8 @@ public class CECustomEventNativeAdvanced implements CustomEventNative {
     private static final String TAG = CECustomEventNativeAdvanced.class.getSimpleName();
 
     private static final int DRAWABLE_FUTURE_TIMEOUT_SECONDS = 10;
+
+    private static final int DEFAULT_TIMEOUT_MILLIS = 5000;
 
     private CustomEventNativeListener mCustomEventNativeListener;
     private NativeAd mNativeAd;
@@ -96,9 +99,12 @@ public class CECustomEventNativeAdvanced implements CustomEventNative {
         mContext = context;
         mCustomEventNativeListener = customEventNativeListener;
 
-        mNativeAd = new NativeAd(context, placementId);
+        mNativeAd = new NativeAd(context);
         mNativeAd.setAdListener(new NativeListener(mNativeAd, nativeMediationAdRequest));
-        mNativeAd.loadAd();
+        RequestInfo requestInfo = new RequestInfo();
+        requestInfo.setPlacement(placementId);
+        requestInfo.setTimeout(DEFAULT_TIMEOUT_MILLIS);
+        mNativeAd.loadAd(requestInfo);
     }
 
     @Override

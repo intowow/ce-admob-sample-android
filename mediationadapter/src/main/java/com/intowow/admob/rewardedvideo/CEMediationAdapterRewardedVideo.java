@@ -14,6 +14,7 @@ import com.google.android.gms.ads.reward.mediation.MediationRewardedVideoAdListe
 import com.intowow.sdk.Ad;
 import com.intowow.sdk.AdError;
 import com.intowow.sdk.I2WAPI;
+import com.intowow.sdk.RequestInfo;
 import com.intowow.sdk.RewardedVideoAd;
 
 /**
@@ -22,6 +23,8 @@ import com.intowow.sdk.RewardedVideoAd;
  */
 public class CEMediationAdapterRewardedVideo implements MediationRewardedVideoAdAdapter {
     protected static final String TAG = CEMediationAdapterRewardedVideo.class.getSimpleName();
+
+    private static final int DEFAULT_TIMEOUT_MILLIS = 5000;
 
     private Context mContext;
     protected RewardedVideoAd mRewardedVideoAd = null;
@@ -82,7 +85,7 @@ public class CEMediationAdapterRewardedVideo implements MediationRewardedVideoAd
     public void loadAd(MediationAdRequest mediationAdRequest, Bundle bundle, Bundle bundle1) {
         //	request the rewarded video ad
         //
-        mRewardedVideoAd = new RewardedVideoAd(mContext, mPlacementId);
+        mRewardedVideoAd = new RewardedVideoAd(mContext);
 
         //	you can close the rewarded video ad while user engaging the ad
         //
@@ -195,7 +198,10 @@ public class CEMediationAdapterRewardedVideo implements MediationRewardedVideoAd
 
         });
 
-        mRewardedVideoAd.loadAd(10000);
+        RequestInfo requestInfo = new RequestInfo();
+        requestInfo.setPlacement(mPlacementId);
+        requestInfo.setTimeout(DEFAULT_TIMEOUT_MILLIS);
+        mRewardedVideoAd.loadAd(requestInfo);
     }
 
     @Override

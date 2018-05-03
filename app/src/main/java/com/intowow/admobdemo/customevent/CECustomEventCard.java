@@ -19,7 +19,9 @@ import com.google.android.gms.ads.mediation.customevent.CustomEventBannerListene
 import com.intowow.sdk.Ad;
 import com.intowow.sdk.AdError;
 import com.intowow.sdk.AdListener;
+import com.intowow.sdk.CEAdSize;
 import com.intowow.sdk.DisplayAd;
+import com.intowow.sdk.RequestInfo;
 
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_INTERNAL_ERROR;
 import static com.google.android.gms.ads.AdRequest.ERROR_CODE_NETWORK_ERROR;
@@ -32,7 +34,7 @@ import static com.google.android.gms.ads.AdRequest.ERROR_CODE_NO_FILL;
 public class CECustomEventCard implements CustomEventBanner, AdListener {
 
     protected static final String TAG = CECustomEventCard.class.getSimpleName();
-    private static final int DEFAULT_TIMEOUT_MILLIS = 10000;
+    private static final int DEFAULT_TIMEOUT_MILLIS = 5000;
 
     private CustomEventBannerListener mBannerListener = null;
 
@@ -77,9 +79,12 @@ public class CECustomEventCard implements CustomEventBanner, AdListener {
         mAdSize = adSize;
         mBannerListener = customEventBannerListener;
 
-        mDisplayAd = new DisplayAd(context, placementId, null);
+        mDisplayAd = new DisplayAd(context);
         mDisplayAd.setAdListener(this);
-        mDisplayAd.loadAd(DEFAULT_TIMEOUT_MILLIS);
+        RequestInfo requestInfo = new RequestInfo();
+        requestInfo.setPlacement(placementId);
+        requestInfo.setTimeout(DEFAULT_TIMEOUT_MILLIS);
+        mDisplayAd.loadAd(requestInfo);
     }
 
     @Override
@@ -239,7 +244,7 @@ public class CECustomEventCard implements CustomEventBanner, AdListener {
             }
         }
 
-        displayAd.resize(newAdWidth);
+        displayAd.resize(new CEAdSize(context, newAdWidth, newAdHeight));
 
         View adView = displayAd.getView();
         ViewGroup.LayoutParams adViewLayoutParams = adView.getLayoutParams();
