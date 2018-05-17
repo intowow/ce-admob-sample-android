@@ -25,6 +25,11 @@ The custom event is under folder 'app/src/main/java/com/intowow/admobdemo/custom
 
 ## CHANGELOG
 
+#### Version 5 (2018-04-19)
+
+#### Features
+* AS-768: Add interface to enable onRewardedComplete callback above AdMob ver.12.0.0
+
 #### Version 4 (2018-01-05)
 
 #### Features

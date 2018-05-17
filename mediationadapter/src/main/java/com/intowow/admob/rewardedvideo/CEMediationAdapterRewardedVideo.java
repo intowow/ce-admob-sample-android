@@ -164,6 +164,7 @@ public class CEMediationAdapterRewardedVideo implements MediationRewardedVideoAd
             @Override
             public void onVideoEnd(Ad arg0) {
                 Log.d(TAG, "Rewarded video ad video end");
+                mListener.onVideoCompleted(CEMediationAdapterRewardedVideo.this);
             }
 
             @Override
