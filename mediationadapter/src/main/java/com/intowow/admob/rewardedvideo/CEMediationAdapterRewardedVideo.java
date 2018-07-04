@@ -77,7 +77,10 @@ public class CEMediationAdapterRewardedVideo implements MediationRewardedVideoAd
         mContext = context;
         mListener = listener;
 
-        I2WAPI.init(mContext, false, false);
+        // [Notice]
+        // init SDK
+        //
+        I2WAPI.init(mContext);
         mInit = true;
     }
 

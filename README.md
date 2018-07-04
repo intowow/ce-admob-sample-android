@@ -25,6 +25,13 @@ The custom event is under folder 'app/src/main/java/com/intowow/admobdemo/custom
 
 ## CHANGELOG
 
+#### Version 7 (2018-07-05)
+
+#### Bug fixes
+* The AdMob custom event sample app will crash when playing card ad.
+* The AdMob custom event demo app will change to non-test mode when load rewarded video.
+
+
 #### Version 6 (2018-05-11)
 
 #### Features

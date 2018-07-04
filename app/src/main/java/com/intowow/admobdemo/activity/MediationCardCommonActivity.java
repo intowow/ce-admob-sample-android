@@ -3,6 +3,7 @@ package com.intowow.admobdemo.activity;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -63,7 +64,6 @@ public class MediationCardCommonActivity extends Activity {
 
     private void loadAd() {
         if (mAdView != null) {
-            mAdViewLayout.removeView(mAdView);
             mAdView.destroy();
             mAdView = null;
         }
@@ -75,7 +75,33 @@ public class MediationCardCommonActivity extends Activity {
 
             @Override
             public void onAdLoaded() {
+                mAdViewLayout.removeAllViews();
                 mAdViewLayout.addView(mAdView);
+            }
+
+            @Override
+            public void onAdClicked() {
+                Log.d(TAG, "Card ad onAdClicked");
+            }
+
+            @Override
+            public void onAdImpression() {
+                Log.d(TAG, "Card ad onAdImpression");
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                Log.d(TAG, "Card ad left application");
+            }
+
+            @Override
+            public void onAdOpened() {
+                Log.d(TAG, "Card ad open ");
+            }
+
+            @Override
+            public void onAdClosed() {
+                Log.d(TAG, "Card ad closed ");
             }
         });
         mAdView.loadAd(new AdRequest.Builder().build());

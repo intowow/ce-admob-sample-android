@@ -44,14 +44,14 @@ public class MediationRewardedVideoCommonActivity extends Activity implements Re
 
     @Override
     public void onResume() {
-        super.onResume();
         mRewardedVideoAd.resume(this);
+        super.onResume();
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         mRewardedVideoAd.pause(this);
+        super.onPause();
     }
 
     @Override
@@ -133,7 +133,7 @@ public class MediationRewardedVideoCommonActivity extends Activity implements Re
         Toast.makeText(this, "onRewardedVideoAdFailedToLoad, error code: " + errorCode, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
+
     public void onRewardedVideoCompleted() {
         Toast.makeText(this, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
     }
